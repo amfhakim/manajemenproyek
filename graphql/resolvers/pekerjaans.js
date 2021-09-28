@@ -39,7 +39,11 @@ module.exports = {
   },
 
   Mutation: {
-    async createPekerjaan(_, { projectId, nama, pj, startAt, endAt }, context) {
+    async createPekerjaan(
+      _,
+      { projectId, nama, pj, startAt, endAt, progres },
+      context
+    ) {
       const { username } = checkAuth(context);
 
       const project = await Project.findById(projectId);
@@ -49,7 +53,7 @@ module.exports = {
           pj,
           startAt,
           endAt,
-          progres: "0",
+          progres,
           username,
           createdAt: new Date().toISOString(),
         });

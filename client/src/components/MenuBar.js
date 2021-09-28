@@ -1,52 +1,45 @@
 import React, { useContext, useState } from "react";
-import { Menu } from "semantic-ui-react";
+import { Container, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth";
+import { Redirect } from "react-router";
 
 function MenuBar() {
   const { user, logout } = useContext(AuthContext);
 
   const pathname = window.location.pathname;
-  const path = pathname === "/" ? "home" : pathname.substr(1);
+  const path = pathname === "/home" ? "home" : pathname.substr(1);
 
   const [activeItem, setActiveItem] = useState(path);
   const handleItemClick = (e, { name }) => setActiveItem(name);
 
   const menuBar = user ? (
-    <Menu pointing secondary size="massive" color="teal">
-      <Menu.Item name={user.username} active as={Link} to="/" />
+    user.username === "admin" ? (
+      <Menu fixed="top" inverted size="huge">
+        <Menu.Item name="projects" active as={Link} to="/projects" />
+        <Menu.Item name="costumers" as={Link} to="/costumers" />
+        <Menu.Item name="users" as={Link} to="/users" />
+        <Menu.Item name="workers" as={Link} to="/workers" />
 
-      <Menu.Menu position="right">
-        <Menu.Item name="logout" onClick={logout} />
-      </Menu.Menu>
-    </Menu>
+        <Menu.Menu position="right">
+          <Menu.Item name={user.username} as={Link} to="/profile" />
+          <Menu.Item name="logout" onClick={logout} />
+        </Menu.Menu>
+      </Menu>
+    ) : (
+      <Container>
+        <Menu fixed="top" inverted size="huge">
+          <Menu.Item name="home" active as={Link} to="/projects" />
+
+          <Menu.Menu position="right">
+            <Menu.Item name={user.username} as={Link} to="/profile" />
+            <Menu.Item name="logout" onClick={logout} />
+          </Menu.Menu>
+        </Menu>
+      </Container>
+    )
   ) : (
-    <Menu pointing secondary size="massive" color="teal">
-      <Menu.Item
-        name="home"
-        active={activeItem === "home"}
-        onClick={handleItemClick}
-        as={Link}
-        to="/"
-      />
-
-      <Menu.Menu position="right">
-        <Menu.Item
-          name="login"
-          active={activeItem === "login"}
-          onClick={handleItemClick}
-          as={Link}
-          to="/login"
-        />
-        <Menu.Item
-          name="register"
-          active={activeItem === "register"}
-          onClick={handleItemClick}
-          as={Link}
-          to="/register"
-        />
-      </Menu.Menu>
-    </Menu>
+    <Redirect to="/" />
   );
 
   return menuBar;

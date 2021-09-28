@@ -6,22 +6,44 @@ import "./App.css";
 import { AuthProvider } from "./context/auth";
 import AuthRoute from "./utils/AuthRoute";
 
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import MenuBar from "./components/MenuBar";
-import SinglePost from "./pages/SinglePost";
+import SinglePost from "./pages/posts/SinglePost";
+import Projects from "./pages/projects/Projects";
+import Costumers from "./pages/costumers/Costumers";
+import AddCostumer from "./pages/costumers/AddCostumer";
+import SingleCostumer from "./pages/costumers/SingleCostumer";
+import Users from "./pages/users/Users";
+import SingleUser from "./pages/users/SingleUser";
+import Workers from "./pages/workers/Workers";
+import AddWorker from "./pages/workers/AddWorker";
+import SingleWorker from "./pages/workers/SingleWorker";
+import SingleProject from "./pages/projects/SingleProject";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Container>
-          <MenuBar />
-          <Route exact path="/" component={Home} />
+          <AuthRoute exact path="/" component={Login} />
           <AuthRoute exact path="/login" component={Login} />
-          <AuthRoute exact path="/register" component={Register} />
+          <Route exact path="/home" component={Projects} />
+          <Route exact path="/projects" component={Projects} />
+          <Route exact path="/costumers" component={Costumers} />
+          <Route exact path="/users" component={Users} />
+          <Route exact path="/workers" component={Workers} />
+          <Route exact path="/register" component={Register} />
           <Route exact path="/posts/:postId" component={SinglePost} />
+          <Route exact path="/users/:userId" component={SingleUser} />
+          <Route exact path="/workers/:workerId" component={SingleWorker} />
+          <Route exact path="/projects/:projectId" component={SingleProject} />
+          <Route
+            exact
+            path="/costumers/:costumerId"
+            component={SingleCostumer}
+          />
+          <Route exact path="/costumers/addcostumer" component={AddCostumer} />
+          <Route exact path="/workers/addworker" component={AddWorker} />
         </Container>
       </Router>
     </AuthProvider>

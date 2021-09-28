@@ -4,6 +4,7 @@ const Worker = require("../../models/Worker");
 const checkAuth = require("../../utils/check-auth");
 const { AuthenticationError, UserInputError } = require("Apollo-server");
 const { validateProjectInput } = require("../../utils/validators");
+const { Error } = require("mongoose");
 
 module.exports = {
   Query: {
@@ -73,7 +74,7 @@ module.exports = {
 
       //validate workers (belon bisa else wkwk)
       const workers = await Worker.find();
-      const workerIds = await [];
+      const workerIds = [];
       for (i = 0; i < namaWorkers.length; i++) {
         workers.map((wr) => {
           if (namaWorkers[i] === wr.nama) {

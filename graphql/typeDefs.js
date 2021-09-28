@@ -6,6 +6,11 @@ module.exports = gql`
     email: String!
     token: String!
     username: String!
+    nama: String!
+    jabatan: String!
+    notlp: String!
+    noktp: String!
+    alamat: String!
     createdAt: String!
   }
   input RegisterInput {
@@ -13,6 +18,11 @@ module.exports = gql`
     password: String!
     confirmPassword: String!
     email: String!
+    nama: String!
+    jabatan: String!
+    notlp: String!
+    noktp: String!
+    alamat: String!
   }
 
   type Post {
@@ -137,6 +147,8 @@ module.exports = gql`
     getPosts: [Post]
     getPost(postId: ID!): Post
 
+    getUser(userId: ID!): User
+    getUsers: [User]
     getCostumer(costumerId: ID!): Costumer
     getCostumers: [Costumer]
     getWorker(workerId: ID!): Worker
@@ -150,6 +162,8 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
+    deleteUser(userId: ID!): String!
+
     createPost(body: String!): Post!
     deletePost(postId: ID!): String!
     createComment(postId: String!, body: String!): Post!
@@ -169,6 +183,7 @@ module.exports = gql`
       pj: String!
       startAt: String!
       endAt: String!
+      progres: String!
     ): Project!
     deletePekerjaan(projectId: ID!, pekerjaanId: ID!): Project!
     createMaterial(

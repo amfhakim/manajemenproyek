@@ -35,10 +35,6 @@ module.exports = {
       context
     ) {
       const user = checkAuth(context);
-      if (user.username !== "admin") {
-        throw new AuthenticationError("Action not allowed");
-      }
-
       const { valid, errors } = validateWorkerInput(
         nama,
         alamat,

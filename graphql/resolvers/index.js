@@ -19,6 +19,7 @@ module.exports = {
     ...workersResolvers.Query,
     ...projectsResolvers.Query,
     ...pekerjaansResolvers.Query,
+    ...usersResolvers.Query,
   },
   Mutation: {
     ...usersResolvers.Mutation,

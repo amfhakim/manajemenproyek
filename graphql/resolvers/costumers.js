@@ -35,10 +35,6 @@ module.exports = {
       context
     ) {
       const user = checkAuth(context);
-      if (user.username !== "admin") {
-        throw new AuthenticationError("Action not allowed");
-      }
-
       const { valid, errors } = validateCostumerInput(
         nama,
         alamat,
@@ -69,8 +65,12 @@ module.exports = {
         username: user.username,
         createdAt: new Date().toISOString(),
       });
-      await newCostumer.save();
-      return newCostumer;
+
+      const result = await newCostumer.save();
+      return {
+        ...result._doc,
+        id: result._id,
+      };
     },
 
     async deleteCostumer(_, { costumerId }, context) {
