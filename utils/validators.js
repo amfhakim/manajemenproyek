@@ -138,14 +138,7 @@ module.exports.validateWorkerInput = (
   };
 };
 
-module.exports.validateProjectInput = (
-  nama,
-  alamat,
-  namaCostumer,
-  budget,
-  startAt,
-  endAt
-) => {
+module.exports.validateProjectInput = (nama, alamat, namaCostumer) => {
   const errors = {};
   if (nama.trim() === "") {
     errors.nama = "nama tidak boleh kosong";
@@ -155,15 +148,6 @@ module.exports.validateProjectInput = (
   }
   if (namaCostumer.trim() === "") {
     errors.namaCostumer = "alamat tidak boleh kosong";
-  }
-  if (budget.trim() === "") {
-    errors.budget = "budget tidak boleh kosong";
-  }
-  if (startAt.trim() === "") {
-    errors.startAt = "tanggal mulai tidak boleh kosong";
-  }
-  if (endAt.trim() === "") {
-    errors.endAt = "tanggal selesai boleh kosong";
   }
 
   return {

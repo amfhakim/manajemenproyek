@@ -29,6 +29,25 @@ module.exports = {
         throw new Error(err);
       }
     },
+
+    async getWorkersInProject(_, { projectId }) {
+      try {
+        const project = await Project.findById(projectId);
+        const projectWorker = [{}];
+        for (i = 0; i < project.namaWorkers.length; i++) {
+          projectWorker[i] = await Worker.findOne({
+            nama: project.namaWorkers[i],
+          });
+        }
+        if (project) {
+          return projectWorker;
+        } else {
+          throw new Error("Project not found");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 
   Mutation: {
@@ -53,10 +72,7 @@ module.exports = {
       const { valid, errors } = validateProjectInput(
         nama,
         alamat,
-        namaCostumer,
-        budget,
-        startAt,
-        endAt
+        namaCostumer
       );
       if (!valid) {
         throw new UserInputError("Errors", { errors });
@@ -72,14 +88,25 @@ module.exports = {
         });
       }
 
-      //validate workers (belon bisa else wkwk)
+      //validate workers
+      //(dah bisa, tapi kalau pakai try-catch bisa gak wkwk)
       const workers = await Worker.find();
       const workerIds = [];
+      let ada = false;
       for (i = 0; i < namaWorkers.length; i++) {
         workers.map((wr) => {
           if (namaWorkers[i] === wr.nama) {
-            workerIds.push(wr.id);
+            workerIds[i] = wr.id;
+            ada = true;
           }
+        });
+        if (ada == false) {
+          errors[`worker ${i}`] = `pekerja ${namaWorkers[i]} belum terdaftar`;
+        }
+      }
+      if (errors) {
+        throw new UserInputError(`pekerja belum terdaftar`, {
+          errors,
         });
       }
 

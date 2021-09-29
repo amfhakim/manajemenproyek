@@ -92,12 +92,12 @@ module.exports = gql`
     nama: String!
     alamat: String!
     namaCostumer: String!
-    budget: String!
-    startAt: String!
-    endAt: String!
-    progres: String!
-    pekerjaans: [Pekerjaan]!
-    namaWorkers: [String]!
+    budget: String
+    startAt: String
+    endAt: String
+    progres: String
+    pekerjaans: [Pekerjaan]
+    namaWorkers: [String]
     createdAt: String!
     username: String!
   }
@@ -105,10 +105,10 @@ module.exports = gql`
     nama: String!
     alamat: String!
     namaCostumer: String!
-    budget: String!
-    startAt: String!
-    endAt: String!
-    namaWorkers: [String]!
+    budget: String
+    startAt: String
+    endAt: String
+    namaWorkers: [String]
   }
   type Pekerjaan {
     id: ID!
@@ -155,6 +155,7 @@ module.exports = gql`
     getWorkers: [Worker]
     getProjects: [Project]
     getProject(projectId: ID!): Project
+    getWorkersInProject(projectId: ID!): [Worker]
     getPekerjaan(projectId: ID!, pekerjaanId: ID!): Pekerjaan
     getPekerjaans(projectId: ID!): [Pekerjaan]
   }
