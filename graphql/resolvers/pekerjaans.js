@@ -81,5 +81,16 @@ module.exports = {
         throw new UserInputError("project not found");
       }
     },
+
+    /*
+    async updatePekerjaan
+    apa saja yg di-update?
+    nama,
+    pj,
+    startAt,
+    endAt,
+
+    sama tools dan materials
+    */
   },
 };

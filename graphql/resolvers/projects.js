@@ -144,5 +144,16 @@ module.exports = {
         throw new Error(err);
       }
     },
+
+    /* async updateProject
+     apa aja yang di-update?
+     nama, 
+     alamat, 
+     budget, 
+     costumer,
+     workers,
+     startAt,
+     endAt,
+    */
   },
 };
