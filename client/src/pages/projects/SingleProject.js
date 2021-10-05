@@ -19,16 +19,40 @@ function SingleProject(props) {
   const projectId = props.match.params.projectId;
   const { user } = useContext(AuthContext);
   let getProject = "";
+  let getWorkersInProject = "";
 
   const { data } = useQuery(FETCH_PROJECT_QUERY, {
     variables: { projectId },
   });
   if (data) {
     getProject = data.getProject;
+    getWorkersInProject = data.getWorkersInProject;
   }
 
   function deleteProjectCallback() {
     props.history.push("/projects");
+  }
+
+  let workersTable;
+  if (!getWorkersInProject) {
+    workersTable = <Button>Tambah Pekerja</Button>;
+  } else {
+    workersTable = (
+      <Table>
+        <Table.Header>
+          <Table.HeaderCell>Nama</Table.HeaderCell>
+          <Table.HeaderCell>Jabatan</Table.HeaderCell>
+        </Table.Header>
+        <Table.Body>
+          {getWorkersInProject.map((w) => (
+            <Table.Row>
+              <Table.Cell>{w.nama}</Table.Cell>
+              <Table.Cell>{w.jabatan}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    );
   }
 
   let projectMarkup;
@@ -102,21 +126,7 @@ function SingleProject(props) {
                   <Card.Content textAlign="center">
                     <Card.Header>Daftar Pekerja</Card.Header>
                   </Card.Content>
-                  <Card.Content>
-                    <Table>
-                      <Table.Header>
-                        <Table.HeaderCell>Nama</Table.HeaderCell>
-                        <Table.HeaderCell>Jabatan</Table.HeaderCell>
-                      </Table.Header>
-                      <Table.Body>
-                        {namaWorkers.map((w) => (
-                          <Table.Row>
-                            <Table.Cell></Table.Cell>
-                          </Table.Row>
-                        ))}
-                      </Table.Body>
-                    </Table>
-                  </Card.Content>
+                  <Card.Content>{workersTable}</Card.Content>
                 </Card>
               </Grid.Column>
               <Grid.Column>
@@ -222,6 +232,12 @@ const FETCH_PROJECT_QUERY = gql`
       }
       createdAt
       username
+    }
+
+    getWorkersInProject(projectId: $projectId) {
+      id
+      nama
+      jabatan
     }
   }
 `;
