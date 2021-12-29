@@ -4,36 +4,37 @@ import { useQuery } from "@apollo/client";
 import { Card, CardContent, Grid, Image, Container } from "semantic-ui-react";
 import moment from "moment";
 import MenuBar from "../../components/MenuBar";
-import DeleteCostumerButton from "../../components/costumers/DeleteCostumer";
+import DeleteCustomerButton from "../../components/customers/DeleteCustomer";
+import { FETCH_CUSTOMER_QUERY } from "../../queries/customers_query";
 
-function SingleCostumer(props) {
-  const costumerId = props.match.params.costumerId;
-  let getCostumer = "";
+function SingleCustomer(props) {
+  const customerId = props.match.params.customerId;
+  let getCustomer = "";
 
-  const { data } = useQuery(FETCH_COSTUMER_QUERY, {
-    variables: { costumerId },
+  const { data } = useQuery(FETCH_CUSTOMER_QUERY, {
+    variables: { customerId },
   });
   if (data) {
-    getCostumer = data.getCostumer;
+    getCustomer = data.getCustomer;
   }
 
-  function deleteCostumerCallback() {
-    props.history.push("/costumers");
+  function deleteCustomerCallback() {
+    props.history.push("/customers");
   }
 
-  let costumerMarkup;
-  if (!getCostumer) {
-    costumerMarkup = <p>loading costumer...</p>;
+  let customerMarkup;
+  if (!getCustomer) {
+    customerMarkup = <p>loading customer...</p>;
   } else {
-    const { nama, email, notlp, noktp, alamat, createdAt } = getCostumer;
+    const { nama, email, notlp, noktp, alamat, createdAt } = getCustomer;
 
-    costumerMarkup = (
+    customerMarkup = (
       <Container>
         <MenuBar />
         <Container style={{ marginTop: "7em" }}>
           <Grid>
             <Grid.Row className="page-title">
-              <h1>Profil Costumer</h1>
+              <h1>Profil Customer</h1>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column width={2}>
@@ -52,14 +53,13 @@ function SingleCostumer(props) {
                     </Card.Meta>
                     <Card.Description>Email: {email}</Card.Description>
                     <Card.Description>No. Telepon: {notlp}</Card.Description>
-                    <Card.Description>No. KTP: {noktp}</Card.Description>
                     <Card.Description>Alamat: {alamat}</Card.Description>
                   </Card.Content>
                   <hr />
                   <CardContent extra>
-                    <DeleteCostumerButton
-                      costumerId={costumerId}
-                      callback={deleteCostumerCallback}
+                    <DeleteCustomerButton
+                      customerId={customerId}
+                      callback={deleteCustomerCallback}
                     />
                   </CardContent>
                 </Card>
@@ -70,20 +70,7 @@ function SingleCostumer(props) {
       </Container>
     );
   }
-  return costumerMarkup;
+  return customerMarkup;
 }
 
-const FETCH_COSTUMER_QUERY = gql`
-  query ($costumerId: ID!) {
-    getCostumer(costumerId: $costumerId) {
-      nama
-      email
-      notlp
-      noktp
-      alamat
-      createdAt
-    }
-  }
-`;
-
-export default SingleCostumer;
+export default SingleCustomer;

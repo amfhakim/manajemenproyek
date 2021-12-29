@@ -3,9 +3,7 @@ import { Card, Image } from "semantic-ui-react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-function WorkerCard({
-  worker: { id, nama, alamat, noktp, notlp, email, jabatan, gaji, createdAt },
-}) {
+function WorkerCard({ worker: { id, nama, notlp, email, createdAt } }) {
   return (
     <Card fluid>
       <Card.Content>
@@ -24,10 +22,7 @@ function WorkerCard({
           <b>email:</b> {email}
         </Card.Description>
         <Card.Description>
-          <b>jabatan:</b> {jabatan}
-        </Card.Description>
-        <Card.Description>
-          <b>gaji:</b> {gaji}
+          <b>no. tlp:</b> {notlp}
         </Card.Description>
       </Card.Content>
     </Card>

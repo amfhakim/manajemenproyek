@@ -1,39 +1,41 @@
 import React, { useState } from "react";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { Button, Icon, Confirm } from "semantic-ui-react";
-import { FETCH_COSTUMERS_QUERY } from "../../queries/costumers_query";
+import {
+  FETCH_CUSTOMERS_QUERY,
+  DELETE_CUSTOMER_MUTATION,
+} from "../../queries/customers_query";
 import MyPopup from "../../utils/MyPopup";
 
-function DeleteCostumerButton({ costumerId, callback }) {
+function DeleteCustomerButton({ customerId, callback }) {
   const [confirmOpen, setConfrimOpen] = useState(false);
 
-  const mutation = DELETE_COSTUMER_MUTATION;
+  const mutation = DELETE_CUSTOMER_MUTATION;
 
-  const [deleteCostumer] = useMutation(mutation, {
+  const [deleteCustomer] = useMutation(mutation, {
     update(proxy) {
       setConfrimOpen(false);
 
-      if (costumerId) {
+      if (customerId) {
         const data = proxy.readQuery({
-          query: FETCH_COSTUMERS_QUERY,
+          query: FETCH_CUSTOMERS_QUERY,
         });
         proxy.writeQuery({
-          query: FETCH_COSTUMERS_QUERY,
+          query: FETCH_CUSTOMERS_QUERY,
           data: {
-            getCostumers: data.getCostumers.filter((c) => c.id !== costumerId),
+            getCustomers: data.getCustomers.filter((c) => c.id !== customerId),
           },
         });
       }
 
       if (callback) callback();
     },
-    variables: { costumerId },
+    variables: { customerId },
   });
 
   return (
     <>
-      <MyPopup content="delete costumer">
+      <MyPopup content="delete customer">
         <Button
           as="div"
           color="red"
@@ -47,16 +49,10 @@ function DeleteCostumerButton({ costumerId, callback }) {
       <Confirm
         open={confirmOpen}
         onCancel={() => setConfrimOpen(false)}
-        onConfirm={deleteCostumer}
+        onConfirm={deleteCustomer}
       />
     </>
   );
 }
 
-const DELETE_COSTUMER_MUTATION = gql`
-  mutation deleteCostumer($costumerId: ID!) {
-    deleteCostumer(costumerId: $costumerId)
-  }
-`;
-
-export default DeleteCostumerButton;
+export default DeleteCustomerButton;

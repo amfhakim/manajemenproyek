@@ -3,8 +3,8 @@ import { Card, Image } from "semantic-ui-react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-function CostumerCard({
-  costumer: { id, nama, alamat, noktp, notlp, email, username, createdAt },
+function CustomerCard({
+  customer: { id, nama, alamat, notlp, email, username, createdAt },
 }) {
   return (
     <Card fluid>
@@ -14,7 +14,7 @@ function CostumerCard({
           size="tiny"
           src="https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
         />
-        <Card.Header as={Link} to={`/costumers/${id}`}>
+        <Card.Header as={Link} to={`/customers/${id}`}>
           {nama}
         </Card.Header>
         <Card.Meta>
@@ -22,9 +22,6 @@ function CostumerCard({
         </Card.Meta>
         <Card.Description>
           <b>alamat:</b> {alamat}
-        </Card.Description>
-        <Card.Description>
-          <b>no KTP:</b> {noktp}
         </Card.Description>
         <Card.Description>
           <b>no telepon:</b> {notlp}
@@ -37,4 +34,4 @@ function CostumerCard({
   );
 }
 
-export default CostumerCard;
+export default CustomerCard;

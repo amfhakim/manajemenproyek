@@ -6,12 +6,10 @@ export const FETCH_WORKERS_QUERY = gql`
       id
       nama
       alamat
-      noktp
       notlp
       email
-      jabatan
-      gaji
       createdAt
+      username
     }
   }
 `;

@@ -1,38 +1,39 @@
 import React, { useState, useContext } from "react";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 
 import { Container, Form, FormField, Button } from "semantic-ui-react";
 import { useForm } from "../../utils/hooks";
 
 import { AuthContext } from "../../context/auth";
-import { FETCH_COSTUMERS_QUERY } from "../../queries/costumers_query";
+import {
+  FETCH_CUSTOMERS_QUERY,
+  CREATE_CUSTOMER_MUTATION,
+} from "../../queries/customers_query";
 import MenuBar from "../../components/MenuBar";
 
-function AddCostumer(props) {
+function AddCustomer(props) {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
-  const { values, onChange, onSubmit } = useForm(addCostumerCallback, {
+  const { values, onChange, onSubmit } = useForm(addCustomerCallback, {
     nama: "",
     alamat: "",
-    noktp: "",
     notlp: "",
     email: "",
   });
 
-  const [addCostumer, { loading }] = useMutation(CREATE_COSTUMER_MUTATION, {
+  const [addCustomer, { loading }] = useMutation(CREATE_CUSTOMER_MUTATION, {
     update(proxy, result) {
       const data = proxy.readQuery({
-        query: FETCH_COSTUMERS_QUERY,
+        query: FETCH_CUSTOMERS_QUERY,
       });
       proxy.writeQuery({
-        query: FETCH_COSTUMERS_QUERY,
+        query: FETCH_CUSTOMERS_QUERY,
         data: {
-          getCostumers: [result.data.createCostumer, ...data.getCostumers],
+          getCustomers: [result.data.createCustomer, ...data.getCustomers],
         },
       });
-      props.history.push("/costumers");
+      props.history.push("/customers");
     },
     onError(err) {
       setErrors(
@@ -44,8 +45,8 @@ function AddCostumer(props) {
     variables: values,
   });
 
-  function addCostumerCallback() {
-    addCostumer();
+  function addCustomerCallback() {
+    addCustomer();
   }
 
   return (
@@ -58,7 +59,7 @@ function AddCostumer(props) {
             noValidate
             className={loading ? "loading" : ""}
           >
-            <h2> Create a costumer: </h2>
+            <h2> Create a customer: </h2>
             <FormField>
               <Form.Input
                 label="Nama"
@@ -75,14 +76,6 @@ function AddCostumer(props) {
                 onChange={onChange}
                 value={values.alamat}
                 error={errors.alamat ? true : false}
-              />
-              <Form.Input
-                label="No KTP"
-                placeholder="no ktp"
-                name="noktp"
-                onChange={onChange}
-                value={values.noktp}
-                error={errors.noktp ? true : false}
               />
               <Form.Input
                 label="No Telepon"
@@ -120,32 +113,4 @@ function AddCostumer(props) {
   );
 }
 
-const CREATE_COSTUMER_MUTATION = gql`
-  mutation createCostumer(
-    $nama: String!
-    $alamat: String!
-    $noktp: String!
-    $notlp: String!
-    $email: String!
-  ) {
-    createCostumer(
-      costumerInput: {
-        nama: $nama
-        alamat: $alamat
-        noktp: $noktp
-        notlp: $notlp
-        email: $email
-      }
-    ) {
-      id
-      nama
-      alamat
-      noktp
-      notlp
-      email
-      createdAt
-    }
-  }
-`;
-
-export default AddCostumer;
+export default AddCustomer;

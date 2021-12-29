@@ -5,36 +5,67 @@ export const FETCH_PROJECTS_QUERY = gql`
     getProjects {
       id
       nama
-      namaCostumer
+      namaCustomer
+      customer {
+        id
+        nama
+      }
       alamat
-      budget
       startAt
       endAt
       namaWorkers
-      pekerjaans {
+      workers {
         id
         nama
-        pj
+        notlp
+      }
+      createdAt
+      username
+    }
+  }
+`;
+
+export const FETCH_PROJECT_QUERY = gql`
+  query ($projectId: ID!) {
+    getProject(projectId: $projectId) {
+      id
+      nama
+      startAt
+      endAt
+      alamat
+      progres
+      namaCustomer
+      customer {
+        id
+        nama
+        notlp
+        email
+      }
+      workers {
+        id
+        nama
+        presences {
+          tanggal
+          kehadiran
+        }
+      }
+      tasks {
+        id
+        nama
         startAt
         endAt
+        status
         materials {
+          id
           nama
-          jenis
-          satuan
-          harga
           jumlah
-          totalHarga
-          createdAt
-          username
+          status
         }
         tools {
           id
           nama
-          hargaSewa
           jumlah
-          totalHarga
-          createdAt
-          username
+          status
         }
       }
       createdAt

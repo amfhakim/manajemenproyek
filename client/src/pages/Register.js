@@ -1,11 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Button, Container, Form } from "semantic-ui-react";
 import { useMutation } from "@apollo/client";
-import gql from "graphql-tag";
 import { useForm } from "../utils/hooks";
 import { AuthContext } from "../context/auth";
 import MenuBar from "../components/MenuBar";
-import { FETCH_USERS_QUERY } from "../queries/users_query";
+import { FETCH_USERS_QUERY, REGISTER_USER } from "../queries/users_query";
 
 function Register(props) {
   const context = useContext(AuthContext);
@@ -16,11 +15,7 @@ function Register(props) {
     email: "",
     password: "",
     confirmPassword: "",
-    nama: "",
-    jabatan: "",
-    notlp: "",
-    noktp: "",
-    alamat: "",
+    name: "",
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
@@ -100,46 +95,10 @@ function Register(props) {
             <Form.Input
               label="Nama Lengkap"
               placeholder="Nama Lengkap.."
-              name="nama"
+              name="name"
               type="text"
-              value={values.nama}
-              error={errors.nama ? true : false}
-              onChange={onChange}
-            />
-            <Form.Input
-              label="Jabatan"
-              placeholder="Jabatan.."
-              name="jabatan"
-              type="text"
-              value={values.jabatan}
-              error={errors.jabatan ? true : false}
-              onChange={onChange}
-            />
-            <Form.Input
-              label="Nomor Telepon"
-              placeholder="nomor telepon.."
-              name="notlp"
-              type="text"
-              value={values.notlp}
-              error={errors.notlp ? true : false}
-              onChange={onChange}
-            />
-            <Form.Input
-              label="Nomor KTP"
-              placeholder="nomor KTP.."
-              name="noktp"
-              type="text"
-              value={values.noktp}
-              error={errors.noktp ? true : false}
-              onChange={onChange}
-            />
-            <Form.Input
-              label="Alamat"
-              placeholder="alamat.."
-              name="alamat"
-              type="text"
-              value={values.alamat}
-              error={errors.alamat ? true : false}
+              value={values.name}
+              error={errors.name ? true : false}
               onChange={onChange}
             />
             <Button type="submit" primary>
@@ -160,44 +119,5 @@ function Register(props) {
     </Container>
   );
 }
-
-const REGISTER_USER = gql`
-  mutation register(
-    $username: String!
-    $email: String!
-    $password: String!
-    $confirmPassword: String!
-    $nama: String!
-    $jabatan: String!
-    $notlp: String!
-    $noktp: String!
-    $alamat: String!
-  ) {
-    register(
-      registerInput: {
-        username: $username
-        email: $email
-        password: $password
-        confirmPassword: $confirmPassword
-        nama: $nama
-        jabatan: $jabatan
-        notlp: $notlp
-        noktp: $noktp
-        alamat: $alamat
-      }
-    ) {
-      id
-      email
-      username
-      nama
-      jabatan
-      notlp
-      noktp
-      alamat
-      createdAt
-      token
-    }
-  }
-`;
 
 export default Register;

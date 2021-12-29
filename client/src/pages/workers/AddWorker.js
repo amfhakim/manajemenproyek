@@ -15,11 +15,8 @@ function AddWorker(props) {
   const { values, onChange, onSubmit } = useForm(addWorkerCallback, {
     nama: "",
     alamat: "",
-    noktp: "",
     notlp: "",
     email: "",
-    jabatan: "",
-    gaji: "",
   });
 
   const [addWorker, { loading }] = useMutation(CREATE_WORKER_MUTATION, {
@@ -78,14 +75,6 @@ function AddWorker(props) {
                 error={errors.alamat ? true : false}
               />
               <Form.Input
-                label="No KTP"
-                placeholder="no ktp"
-                name="noktp"
-                onChange={onChange}
-                value={values.noktp}
-                error={errors.noktp ? true : false}
-              />
-              <Form.Input
                 label="No Telepon"
                 placeholder="no tlp"
                 name="notlp"
@@ -100,22 +89,6 @@ function AddWorker(props) {
                 onChange={onChange}
                 value={values.email}
                 error={errors.email ? true : false}
-              />
-              <Form.Input
-                label="Jabatan"
-                placeholder="jabatan"
-                name="jabatan"
-                onChange={onChange}
-                value={values.jabatan}
-                error={errors.jabatan ? true : false}
-              />
-              <Form.Input
-                label="Gaji"
-                placeholder="gaji"
-                name="gaji"
-                onChange={onChange}
-                value={values.gaji}
-                error={errors.gaji ? true : false}
               />
               <Button type="submit" color="teal">
                 Submit
@@ -141,31 +114,17 @@ const CREATE_WORKER_MUTATION = gql`
   mutation createWorker(
     $nama: String!
     $alamat: String!
-    $noktp: String!
     $notlp: String!
     $email: String!
-    $jabatan: String!
-    $gaji: String!
   ) {
     createWorker(
-      workerInput: {
-        nama: $nama
-        alamat: $alamat
-        noktp: $noktp
-        notlp: $notlp
-        email: $email
-        jabatan: $jabatan
-        gaji: $gaji
-      }
+      input: { nama: $nama, alamat: $alamat, notlp: $notlp, email: $email }
     ) {
       id
       nama
       alamat
-      noktp
       notlp
       email
-      jabatan
-      gaji
     }
   }
 `;

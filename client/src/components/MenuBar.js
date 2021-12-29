@@ -17,7 +17,7 @@ function MenuBar() {
     user.username === "admin" ? (
       <Menu fixed="top" inverted size="huge">
         <Menu.Item name="projects" active as={Link} to="/projects" />
-        <Menu.Item name="costumers" as={Link} to="/costumers" />
+        <Menu.Item name="customers" as={Link} to="/customers" />
         <Menu.Item name="users" as={Link} to="/users" />
         <Menu.Item name="workers" as={Link} to="/workers" />
 

@@ -10,9 +10,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SinglePost from "./pages/posts/SinglePost";
 import Projects from "./pages/projects/Projects";
-import Costumers from "./pages/costumers/Costumers";
-import AddCostumer from "./pages/costumers/AddCostumer";
-import SingleCostumer from "./pages/costumers/SingleCostumer";
+import Customers from "./pages/customers/Customers";
+import AddCustomer from "./pages/customers/AddCustomer";
+import SingleCustomer from "./pages/customers/SingleCustomer";
 import Users from "./pages/users/Users";
 import SingleUser from "./pages/users/SingleUser";
 import Workers from "./pages/workers/Workers";
@@ -29,7 +29,7 @@ function App() {
           <AuthRoute exact path="/login" component={Login} />
           <Route exact path="/home" component={Projects} />
           <Route exact path="/projects" component={Projects} />
-          <Route exact path="/costumers" component={Costumers} />
+          <Route exact path="/customers" component={Customers} />
           <Route exact path="/users" component={Users} />
           <Route exact path="/workers" component={Workers} />
           <Route exact path="/register" component={Register} />
@@ -39,10 +39,10 @@ function App() {
           <Route exact path="/projects/:projectId" component={SingleProject} />
           <Route
             exact
-            path="/costumers/:costumerId"
-            component={SingleCostumer}
+            path="/customers/:customerId"
+            component={SingleCustomer}
           />
-          <Route exact path="/costumers/addcostumer" component={AddCostumer} />
+          <Route exact path="/customers/addcustomer" component={AddCustomer} />
           <Route exact path="/workers/addworker" component={AddWorker} />
         </Container>
       </Router>

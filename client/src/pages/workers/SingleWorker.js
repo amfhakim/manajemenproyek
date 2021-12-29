@@ -25,8 +25,7 @@ function SingleWorker(props) {
   if (!getWorker) {
     Markup = <p>loading worker...</p>;
   } else {
-    const { email, nama, jabatan, notlp, noktp, alamat, gaji, createdAt } =
-      getWorker;
+    const { email, nama, notlp, alamat, createdAt } = getWorker;
 
     Markup = (
       <Container>
@@ -52,11 +51,8 @@ function SingleWorker(props) {
                       registered since : {moment(createdAt).fromNow()}
                     </Card.Meta>
                     <Card.Description>Email: {email}</Card.Description>
-                    <Card.Description>Jabatan: {jabatan}</Card.Description>
                     <Card.Description>No. Telepon: {notlp}</Card.Description>
-                    <Card.Description>No. KTP: {noktp}</Card.Description>
                     <Card.Description>Alamat: {alamat}</Card.Description>
-                    <Card.Description>Gaji: {gaji}</Card.Description>
                   </Card.Content>
                   <hr />
                   <CardContent extra>
@@ -82,11 +78,8 @@ const FETCH_WORKER_QUERY = gql`
       id
       nama
       alamat
-      noktp
       notlp
       email
-      jabatan
-      gaji
       createdAt
     }
   }

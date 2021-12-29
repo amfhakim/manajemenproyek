@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { Button, Icon, Confirm } from "semantic-ui-react";
-import { FETCH_USERS_QUERY } from "../../queries/users_query";
+import {
+  FETCH_USERS_QUERY,
+  DELETE_USER_MUTATION,
+} from "../../queries/users_query";
 import MyPopup from "../../utils/MyPopup";
 
 function DeleteUserButton({ userId, callback }) {
@@ -52,11 +55,5 @@ function DeleteUserButton({ userId, callback }) {
     </>
   );
 }
-
-const DELETE_USER_MUTATION = gql`
-  mutation deleteUser($userId: ID!) {
-    deleteUser(userId: $userId)
-  }
-`;
 
 export default DeleteUserButton;
